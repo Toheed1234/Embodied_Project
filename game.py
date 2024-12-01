@@ -97,7 +97,7 @@ def draw_signals(signals):
 
 def open_feedback_window(outcome):
     def submit_feedback(answer):
-        save_feedback(answer)
+        save_feedback(answer,outcome)
         feedback_window.destroy()
         pygame.quit()
 
@@ -123,10 +123,10 @@ def open_feedback_window(outcome):
 
     feedback_window.mainloop()
 
-def save_feedback(value):
+def save_feedback(value,outcome):
     with open("feedback.csv", mode="a", newline="") as file:  # Ensure the path is accessible
         writer = csv.writer(file)
-        writer.writerow([value, steps_taken])
+        writer.writerow([steps_taken,outcome,value])
 
 # Main loop
 running = True
@@ -157,13 +157,13 @@ while running:
     # Check for bombs
     if tuple(player_pos) in bombs:
         game_over = True
-        open_feedback_window("You hit a bomb!")
+        open_feedback_window("Died")
         break
 
     # Check for goal
     if grid[player_pos[0]][player_pos[1]] == 3:
         game_over = True
-        open_feedback_window("You reached the goal!")
+        open_feedback_window("Goal")
         break
 
     # Draw everything

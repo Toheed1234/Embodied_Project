@@ -60,10 +60,10 @@ def draw_player():
     y = player_pos[0] * CELL_SIZE + 5
     screen.blit(character, (x, y))
 
-def save_steps(steps):
+def save_steps(steps,outcome):
     with open("steps.csv", mode="a", newline="") as file:
         writer = csv.writer(file)  
-        writer.writerow([steps])     # Write steps in the first column
+        writer.writerow([steps,outcome])     # Write steps in the first column
 
 # Main loop
 running = True
@@ -94,13 +94,13 @@ while running:
     # Check for bombs
     if tuple(player_pos) in bombs:
         game_over = True
-        save_steps(steps_taken)
+        save_steps(steps_taken,"Died")
         break
 
     # Check for goal
     if grid[player_pos[0]][player_pos[1]] == 3:
         game_over = True
-        save_steps(steps_taken)
+        save_steps(steps_taken,"Goal")
         break
 
     # Draw everything
