@@ -37,8 +37,8 @@ while len(bombs) < NUM_BOMBS:
 # Player settings
 player_pos = [0, 0]
 
-# Feedback data
-feedback_data = []
+# Step counter
+steps_taken = 0
 
 # Load character sprite
 character = pygame.image.load("Character.png")  # Replace this with your own sprite if needed
@@ -56,7 +56,7 @@ def draw_grid():
                 pygame.draw.rect(screen, GOAL_COLOR, rect)
                 font = pygame.font.Font(None, 24)
                 text = font.render("Goal", True, (0, 0, 0))
-                text_rect = text.get_rect(center=(col * CELL_SIZE + CELL_SIZE // 2 + 50, row * CELL_SIZE + 35))
+                text_rect = text.get_rect(center=(col * CELL_SIZE + CELL_SIZE // 2 + 50, row * CELL_SIZE + 50 + CELL_SIZE // 2))
                 screen.blit(text, text_rect)
 
     # Draw the boundary
@@ -123,11 +123,10 @@ def open_feedback_window(outcome):
 
     feedback_window.mainloop()
 
-
 def save_feedback(value):
-    with open("C:\\Users\\Toheed\\Documents\\GitHub\\TestProjects\\venv\\Embodied_Project\\feedback.csv", mode="a", newline="") as file:  # Updated path
+    with open("feedback.csv", mode="a", newline="") as file:  # Ensure the path is accessible
         writer = csv.writer(file)
-        writer.writerow([value])
+        writer.writerow([value, steps_taken])
 
 # Main loop
 running = True
@@ -144,12 +143,16 @@ while running:
             row, col = player_pos
             if event.key == pygame.K_UP and row > 0:
                 player_pos[0] -= 1
+                steps_taken += 1
             elif event.key == pygame.K_DOWN and row < ROWS - 1:
                 player_pos[0] += 1
+                steps_taken += 1
             elif event.key == pygame.K_LEFT and col > 0:
                 player_pos[1] -= 1
+                steps_taken += 1
             elif event.key == pygame.K_RIGHT and col < COLS - 1:
                 player_pos[1] += 1
+                steps_taken += 1
 
     # Check for bombs
     if tuple(player_pos) in bombs:
