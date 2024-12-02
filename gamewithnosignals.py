@@ -10,7 +10,7 @@ WIDTH, HEIGHT = 600, 600
 ROWS, COLS = 10, 10  # Grid dimensions
 CELL_SIZE = WIDTH // COLS
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Maze Game")
+pygame.display.set_caption("Maze Game Without Signals")
 
 # Colors
 BACKGROUND = (240, 240, 240)
@@ -60,10 +60,10 @@ def draw_player():
     y = player_pos[0] * CELL_SIZE + 5
     screen.blit(character, (x, y))
 
-def save_steps(steps,outcome):
+def save_steps(steps,outcome,game_type):
     with open("steps.csv", mode="a", newline="") as file:
         writer = csv.writer(file)  
-        writer.writerow([steps,outcome])     # Write steps in the first column
+        writer.writerow([steps,outcome,game_type])     # Write steps in the first column
 
 # Main loop
 running = True
@@ -94,13 +94,13 @@ while running:
     # Check for bombs
     if tuple(player_pos) in bombs:
         game_over = True
-        save_steps(steps_taken,"Died")
+        save_steps(steps_taken,"Died","Without Visual Signals")
         break
 
     # Check for goal
     if grid[player_pos[0]][player_pos[1]] == 3:
         game_over = True
-        save_steps(steps_taken,"Goal")
+        save_steps(steps_taken,"Goal","Without Visual Signals")
         break
 
     # Draw everything

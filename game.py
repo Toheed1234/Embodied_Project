@@ -97,7 +97,7 @@ def draw_signals(signals):
 
 def open_feedback_window(outcome):
     def submit_feedback(answer):
-        save_feedback(answer,outcome)
+        save_feedback(answer,outcome,"With Visual Signals")
         feedback_window.destroy()
         pygame.quit()
 
@@ -123,10 +123,10 @@ def open_feedback_window(outcome):
 
     feedback_window.mainloop()
 
-def save_feedback(value,outcome):
+def save_feedback(value,outcome,game_type):
     with open("feedback.csv", mode="a", newline="") as file:  # Ensure the path is accessible
         writer = csv.writer(file)
-        writer.writerow([steps_taken,outcome,value])
+        writer.writerow([steps_taken,outcome,value,game_type])
 
 # Main loop
 running = True
