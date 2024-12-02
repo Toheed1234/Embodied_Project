@@ -61,7 +61,7 @@ def draw_player():
     screen.blit(character, (x, y))
 
 def save_steps(steps,outcome,game_type):
-    with open("steps.csv", mode="a", newline="") as file:
+    with open("steps.csv", mode="a", newline='') as file:
         writer = csv.writer(file)  
         writer.writerow([steps,outcome,game_type])     # Write steps in the first column
 

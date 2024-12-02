@@ -124,7 +124,7 @@ def open_feedback_window(outcome):
     feedback_window.mainloop()
 
 def save_feedback(value,outcome,game_type):
-    with open("feedback.csv", mode="a", newline="") as file:  # Ensure the path is accessible
+    with open("feedback.csv", mode="a", newline='') as file:  # Ensure the path is accessible
         writer = csv.writer(file)
         writer.writerow([steps_taken,outcome,value,game_type])
 
